@@ -2,13 +2,13 @@ import client from '../api';
 import config from '../config';
 import logger from '../logger';
 import { parseMap, parseGoalMap } from '../parsers';
-import { Astral } from '../types';
+import { ASTRAL_NAME, ASTRAL_TYPE, Astral } from '../types';
 import { PromisePool } from '@supercharge/promise-pool';
 import { validate } from './utils';
 
 const log = logger.child({ module: 'service' });
 
-const TYPE_TO_URL = {
+const ASTRAL_TYPE_TO_URL = {
   0: '/polyanets',
   1: '/soloons',
   2: '/comeths',
@@ -21,7 +21,7 @@ const add = async (astral: Astral) => {
 
   await client.request({
     method: 'post',
-    url: TYPE_TO_URL[astral.type as keyof typeof TYPE_TO_URL],
+    url: ASTRAL_TYPE_TO_URL[astral.type as keyof typeof ASTRAL_TYPE_TO_URL],
     data: {
       row: astral.y,
       column: astral.x,
@@ -107,7 +107,9 @@ const solveMap = async () => {
 const clearMap = async () => {
   const goalMap = await getGoalMap();
 
-  await updateMany(goalMap.map((astral) => ({ name: 'SPACE', type: -1, x: astral.x, y: astral.y })));
+  await updateMany(
+    goalMap.map((astral) => ({ name: ASTRAL_NAME.SPACE, type: ASTRAL_TYPE.SPACE, x: astral.x, y: astral.y }))
+  );
 };
 
 const api = {

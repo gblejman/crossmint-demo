@@ -1,13 +1,28 @@
+/** Constants */
+
+export const ASTRAL_NAME = {
+  SPACE: 'SPACE',
+  POLYANET: 'POLYANET',
+  SOLOON: 'SOLOON',
+  COMETH: 'COMETH',
+} as const;
+
+export const ASTRAL_TYPE = {
+  SPACE: -1,
+  POLYANET: 0,
+  SOLOON: 1,
+  COMETH: 2,
+} as const;
+
+/** Types */
+
 export type Astral = {
-  name: 'SPACE' | 'POLYANET' | 'SOLOON' | 'COMETH';
-  type: number;
+  name: ValueOf<typeof ASTRAL_NAME>;
+  type: ValueOf<typeof ASTRAL_TYPE>;
   x: number;
   y: number;
   color?: 'blue' | 'red' | 'purple' | 'white';
   direction?: 'up' | 'down' | 'right' | 'left';
 };
 
-/** Constants */
-export const ASTRAL_NAMES = ['SPACE', 'POLYANET', 'SOLOON', 'COMETH'];
-export const SOLOON_COLORS = ['BLUE', 'RED', 'PURPLE', 'WHITE'];
-export const COMETH_DIRECTIONS = ['UP', 'DOWN', 'RIGHT', 'LEFT'];
+type ValueOf<T> = T[keyof T];

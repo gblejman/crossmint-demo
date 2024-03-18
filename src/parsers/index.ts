@@ -1,4 +1,4 @@
-import { Astral, ASTRAL_NAMES } from '../types';
+import { Astral, ASTRAL_NAME, ASTRAL_TYPE } from '../types';
 
 /**
  * Parse Goal Map into array of astral objects
@@ -17,10 +17,10 @@ export const parseGoalMap = (goalMap: string[][]): Astral[] => {
       return {
         // @ts-ignore
         name,
-        ...(name == 'SPACE' && { type: -1 }),
-        ...(name == 'POLYANET' && { type: 0 }),
-        ...(name == 'SOLOON' && { type: 1, color: prefix.toLowerCase() }),
-        ...(name == 'COMETH' && { type: 2, direction: prefix.toLowerCase() }),
+        ...(name == ASTRAL_NAME.SPACE && { type: ASTRAL_TYPE.SPACE }),
+        ...(name == ASTRAL_NAME.POLYANET && { type: ASTRAL_TYPE.POLYANET }),
+        ...(name == ASTRAL_NAME.SOLOON && { type: ASTRAL_TYPE.SOLOON, color: prefix.toLowerCase() }),
+        ...(name == ASTRAL_NAME.COMETH && { type: ASTRAL_TYPE.COMETH, direction: prefix.toLowerCase() }),
         x,
         y,
       };
@@ -30,20 +30,20 @@ export const parseGoalMap = (goalMap: string[][]): Astral[] => {
 
 /**
  * Parse Map into array of astral objects
- * @param map the goal map
+ * @param map the current map
  * @returns an array of astral objects
  */
 export const parseMap = (map: any[][]): Astral[] => {
   return map.flatMap((row: string[], y: number) =>
     row.map((obj: any, x: number): Astral => {
       if (!obj) {
-        return { name: 'SPACE', type: -1, x, y };
+        return { name: ASTRAL_NAME.SPACE, type: ASTRAL_TYPE.SPACE, x, y };
       }
 
       return {
-        ...(obj.type == 0 && { name: 'POLYANET' }),
-        ...(obj.type == 1 && { name: 'SOLOON' }),
-        ...(obj.type == 2 && { name: 'COMETH' }),
+        ...(obj.type == ASTRAL_TYPE.POLYANET && { name: ASTRAL_NAME.POLYANET }),
+        ...(obj.type == ASTRAL_TYPE.SOLOON && { name: ASTRAL_NAME.SOLOON }),
+        ...(obj.type == ASTRAL_TYPE.COMETH && { name: ASTRAL_NAME.COMETH }),
         ...obj,
         x,
         y,
