@@ -3,14 +3,18 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "script": "npx ts-node -T",
+    "start": "npm run script src/index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "German Blejman",
   "devDependencies": {
+    "pino-pretty": "^10.3.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.2"
   },
   "dependencies": {
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "pino": "^8.19.0"
   }
 }
