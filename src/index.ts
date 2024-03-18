@@ -6,11 +6,15 @@ const run = async () => {
   try {
     log.debug(config, 'running with config');
 
+    const goalMap = await service.getGoalMap();
+    log.info(goalMap, 'goal map');
+
     const map = await service.getMap();
     log.info(map, 'map');
 
-    const goalMap = await service.getGoalMap();
-    log.info(goalMap, 'map');
+    const result = await Promise.allSettled(goalMap.map((astral) => service.update(astral)));
+
+    log.info(result);
   } catch (e) {
     log.error(e);
   }
