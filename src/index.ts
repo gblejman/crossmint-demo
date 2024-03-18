@@ -1,6 +1,6 @@
 import config from './config';
 import log from './logger';
-import service from './service';
+import service from './service/astral-service';
 
 const run = async () => {
   try {

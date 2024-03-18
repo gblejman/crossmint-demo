@@ -151,7 +151,7 @@ const clearMap = async () => {
   );
 };
 
-const api = {
+const service = {
   getGoalMap,
   getMap,
   validateMap,
@@ -163,4 +163,4 @@ const api = {
   updateMany,
 };
 
-export default api;
+export default service;

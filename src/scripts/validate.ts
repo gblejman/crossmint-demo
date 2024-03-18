@@ -1,5 +1,5 @@
 import log from '../logger';
-import service from '../service';
+import service from '../service/astral-service';
 import _ from 'lodash';
 
 const run = async () => {
