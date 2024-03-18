@@ -14,7 +14,12 @@ const ASTRAL_TYPE_TO_URL = {
   2: '/comeths',
 };
 
-const add = async (astral: Astral) => {
+/**
+ * Creates an astral object
+ * @param astral
+ * @returns the created object
+ */
+const create = async (astral: Astral) => {
   log.debug(astral, 'create astral');
 
   const { x: column, y: row, type, ...rest } = astral;
@@ -33,6 +38,11 @@ const add = async (astral: Astral) => {
   return astral;
 };
 
+/**
+ * Removes an astral object
+ * @param astral
+ * @returns the removed object
+ */
 const remove = async (astral: Astral) => {
   log.debug(astral, 'remove astral');
 
@@ -51,10 +61,20 @@ const remove = async (astral: Astral) => {
   return astral;
 };
 
+/**
+ * Updates (creates/removes) an astral object
+ * @param astral
+ * @returns the updated object
+ */
 const update = (astral: Astral) => {
-  return astral.type == -1 ? remove(astral) : add(astral);
+  return astral.type == -1 ? remove(astral) : create(astral);
 };
 
+/**
+ * Updates many astral objects
+ * @param astrals
+ * @returns the updated objects
+ */
 const updateMany = async (astrals: Astral[]) => {
   const { results } = await PromisePool.for(astrals)
     .withConcurrency(config.service.concurrency)
@@ -72,6 +92,10 @@ const updateMany = async (astrals: Astral[]) => {
   return results;
 };
 
+/**
+ * Gets the goal map
+ * @returns the goal map as array of astral objects
+ */
 const getGoalMap = async () => {
   const data = await client.request({
     url: `/map/${config.candidateId}/goal`,
@@ -80,6 +104,10 @@ const getGoalMap = async () => {
   return parseGoalMap(data.goal);
 };
 
+/**
+ * Gets the current map
+ * @returns the current map as array of astral objects
+ */
 const getMap = async () => {
   const data = await client.request({
     url: `/map/${config.candidateId}`,
@@ -88,6 +116,11 @@ const getMap = async () => {
   return parseMap(data.map.content);
 };
 
+/**
+ * Validates the current map vs the goal map
+ * @see ./utils.validate
+ * @returns the validation object
+ */
 const validateMap = async () => {
   const goalMap = await getGoalMap();
   const map = await getMap();
@@ -95,6 +128,9 @@ const validateMap = async () => {
   return validate(goalMap, map);
 };
 
+/**
+ * Solves the map by inserting the missing astral objects
+ */
 const solveMap = async () => {
   let valid = await validateMap();
 
@@ -104,6 +140,9 @@ const solveMap = async () => {
   }
 };
 
+/**
+ * Clears the map by inserting all SPACE objects
+ */
 const clearMap = async () => {
   const goalMap = await getGoalMap();
 
@@ -118,7 +157,7 @@ const api = {
   validateMap,
   solveMap,
   clearMap,
-  add,
+  create,
   remove,
   update,
   updateMany,
