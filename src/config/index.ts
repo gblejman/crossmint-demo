@@ -10,6 +10,11 @@ const config = {
   api: {
     baseUrl: process.env.API_URL,
     timeout: 15000,
+    retries: 5,
+    delayFactor: 2000,
+  },
+  service: {
+    concurrency: 2,
   },
 };
 

@@ -4,6 +4,8 @@
   "main": "index.js",
   "scripts": {
     "script": "npx ts-node -T",
+    "validate": "npm run script src/scripts/validate",
+    "solve": "npm run script src/scripts/solve",
     "start": "npm run script src/index",
     "test": "jest"
   },
@@ -18,7 +20,9 @@
     "typescript": "^5.4.2"
   },
   "dependencies": {
+    "@supercharge/promise-pool": "^3.1.1",
     "axios": "^1.6.8",
+    "axios-retry": "^4.0.0",
     "dotenv": "^16.4.5",
     "lodash": "^4.17.21",
     "pino": "^8.19.0"

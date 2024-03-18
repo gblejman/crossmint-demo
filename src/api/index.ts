@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
+import axiosRetry from 'axios-retry';
 import config from '../config';
 import logger from '../logger';
 
@@ -20,7 +21,7 @@ client.interceptors.request.use(
     return config;
   },
   (error) => {
-    log.error(error, 'request error');
+    log.error(error.message, 'request error');
     return Promise.reject(error);
   }
 );
@@ -30,9 +31,34 @@ client.interceptors.response.use(
     return response.data;
   },
   (error) => {
-    log.error(error, 'response error');
+    log.error(error.message, 'response error');
     return Promise.reject(error);
   }
 );
+
+axiosRetry(client, {
+  retries: config.api.retries,
+  // Handle 429 - Too many requests
+  retryCondition: (e) => {
+    return axiosRetry.isNetworkOrIdempotentRequestError(e) || e.response?.status === 429;
+  },
+  retryDelay: (retryCount) => {
+    const delay = 2 ** retryCount * config.api.delayFactor;
+    // 0-20% of the delay
+    const randomSum = delay * 0.2 * Math.random();
+    return delay + randomSum;
+  },
+  onRetry: (retryCount, error, config) => {
+    log.warn(
+      {
+        // error: extractError(error),
+        config: extractConfig(config),
+        retryCount,
+      },
+      'retry'
+    );
+  },
+  shouldResetTimeout: true,
+});
 
 export default client;

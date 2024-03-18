@@ -12,9 +12,9 @@ const run = async () => {
     const map = await service.getMap();
     log.info(map, 'map');
 
-    const result = await Promise.allSettled(goalMap.map((astral) => service.update(astral)));
+    const result = await service.updateMany(goalMap);
 
-    log.info(result);
+    log.info(result, 'created astrals');
   } catch (e) {
     log.error(e);
   }
