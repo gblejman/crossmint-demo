@@ -1,11 +1,18 @@
 import config from './config';
-import log from './log';
+import log from './logger';
+import service from './service';
 
 const run = async () => {
   try {
-    log.info(config, 'running with config');
+    log.debug(config, 'running with config');
+
+    const map = await service.getMap();
+    log.info(map, 'map');
+
+    const goalMap = await service.getGoalMap();
+    log.info(goalMap, 'map');
   } catch (e) {
-    console.log(e);
+    log.error(e);
   }
 };
 

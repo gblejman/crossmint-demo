@@ -1,7 +1,7 @@
 import pino from 'pino';
-import config from './config';
+import config from '../config';
 
-const log = pino({
+const logger = pino({
   level: config.log.level,
   transport: {
     target: 'pino-pretty',
@@ -9,4 +9,4 @@ const log = pino({
   nestedKey: 'payload',
 });
 
-export default log;
+export default logger;

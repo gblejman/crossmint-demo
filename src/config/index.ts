@@ -5,10 +5,11 @@ dotenv.config();
 const config = {
   candidateId: process.env.CANDIDATE_ID,
   log: {
-    level: process.env.LOG_LEVEL || 'info',
+    level: process.env.LOG_LEVEL || 'debug',
   },
   api: {
     baseUrl: process.env.API_URL,
+    timeout: 15000,
   },
 };
 
