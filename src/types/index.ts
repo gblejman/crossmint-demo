@@ -14,6 +14,15 @@ export const ASTRAL_TYPE = {
   COMETH: 2,
 } as const;
 
+export const SOLOON_COLORS = {
+  BLUE: 'blue',
+  RED: 'red',
+  PURPLE: 'purple',
+  WHITE: 'white',
+} as const;
+
+export const COMETH_DIRECTIONS = { UP: 'up', DOWN: 'down', RIGHT: 'right', LEFT: 'left' } as const;
+
 /** Types */
 
 export type Astral = {
@@ -21,8 +30,8 @@ export type Astral = {
   type: ValueOf<typeof ASTRAL_TYPE>;
   x: number;
   y: number;
-  color?: 'blue' | 'red' | 'purple' | 'white';
-  direction?: 'up' | 'down' | 'right' | 'left';
+  color?: ValueOf<typeof SOLOON_COLORS>;
+  direction?: ValueOf<typeof COMETH_DIRECTIONS>;
 };
 
 type ValueOf<T> = T[keyof T];
