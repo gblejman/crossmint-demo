@@ -5,16 +5,6 @@ import { parseMap, parseGoalMap } from '../parsers';
 
 const log = logger.child({ module: 'service' });
 
-const getMap = async () => {
-  log.debug('get map');
-
-  const data = await client.request({
-    url: `/map/${config.candidateId}`,
-  });
-
-  return parseMap(data.map.content);
-};
-
 const getGoalMap = async () => {
   log.debug('get goal map');
 
@@ -25,9 +15,19 @@ const getGoalMap = async () => {
   return parseGoalMap(data.goal);
 };
 
+const getMap = async () => {
+  log.debug('get map');
+
+  const data = await client.request({
+    url: `/map/${config.candidateId}`,
+  });
+
+  return parseMap(data.map.content);
+};
+
 const api = {
-  getMap,
   getGoalMap,
+  getMap,
 };
 
 export default api;
