@@ -6,6 +6,7 @@
     "script": "npx ts-node -T",
     "validate": "npm run script src/scripts/validate",
     "solve": "npm run script src/scripts/solve",
+    "clear": "npm run script src/scripts/clear",
     "start": "npm run script src/index",
     "test": "jest"
   },

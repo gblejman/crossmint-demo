@@ -104,11 +104,18 @@ const solveMap = async () => {
   }
 };
 
+const clearMap = async () => {
+  const goalMap = await getGoalMap();
+
+  await updateMany(goalMap.map((astral) => ({ name: 'SPACE', type: -1, x: astral.x, y: astral.y })));
+};
+
 const api = {
   getGoalMap,
   getMap,
   validateMap,
   solveMap,
+  clearMap,
   add,
   remove,
   update,
